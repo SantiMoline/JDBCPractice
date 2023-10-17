@@ -32,6 +32,7 @@ public class ProductService {
         if (storedProd == null) {
             throw new IllegalArgumentException("The product does not exist in our database.");
         }
+        prod.setId(id); //Because when generating the object is not mandatory to set the id before insertion in the DB.
         dao.updateProduct(prod);
     }
 

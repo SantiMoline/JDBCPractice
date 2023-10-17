@@ -10,10 +10,10 @@ import services.ProductService;
 public class App {
     final static int MAX_OPTION = 9;
     static ManufacturerService ms = new ManufacturerService();
-
+    static ProductService ps = new ProductService();
     public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
-        ProductService ps = new ProductService();
+
         ArrayList<Product> products;
         boolean active = true;
         System.out.println("\t\t-------Welcome to DeviceStore-------");
@@ -48,13 +48,16 @@ public class App {
                         System.out.println(ps.getCheapestProduct());
                         break;
                     case 6:
-                        String name = promptForName(scan);
-                        double price = promptForPrice(scan);
-                        int manufacturerId = promptForManufacturerId(scan);
-                        Product newProd = ps.createProduct(name, price, manufacturerId);
+                        Product newProd = promptAndCreateProduct(scan);
                         ps.persistProduct(newProd);
                         break;
                     case 7:
+                        System.out.println("Enter the id of the product you wish to update.");
+                        int id = promptForProductId(scan);
+                        System.out.println("Enter the new information for that product.");
+                        Product prod = promptAndCreateProduct(scan);
+                        
+                        ps.updateProduct(id, prod);
                         break;
                     case 8:
                         String manufacturerName = promptForName(scan);
@@ -66,7 +69,6 @@ public class App {
                         System.out.println("Hope you found what you were looking for! Until next time!");
                         break;
                 }
-
             }
         } catch (SQLException e) {
             System.out.println(e.getSQLState());
@@ -173,6 +175,28 @@ public class App {
 
     public static boolean isInvalidManufacturerId(int id) throws SQLException {
         return id < 0 || id > ms.getMaxManufacturerId();
+    }
+
+    public static Product promptAndCreateProduct(Scanner scan) throws SQLException {
+        String name = promptForName(scan);
+        double price = promptForPrice(scan);
+        int manufacturerId = promptForManufacturerId(scan);
+        return ps.createProduct(name, price, manufacturerId);
+    }
+
+    public static int promptForProductId(Scanner scan) throws SQLException {
+        while (true) {
+            System.out.print("Insert a valid Product's Id: ");
+            if(scan.hasNextInt()) {
+                int opt = scan.nextInt();
+                scan.nextLine(); //Throwaway scan.
+                if(opt > 0) {
+                    return opt;
+                }
+            } else {
+                scan.next(); //To capture incorrect input from user.
+            }
+        }
     }
 
 }
