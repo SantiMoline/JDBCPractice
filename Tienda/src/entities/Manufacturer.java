@@ -13,11 +13,11 @@ public class Manufacturer {
         this.name = name;
     }
 
-    public int getid() {
+    public int getId() {
         return this.id;
     }
 
-    public void setid(int id) {
+    public void setId(int id) {
         if (id < 0) {
             throw new IllegalArgumentException("Manufacturer's id must be greater than 0.");
         }
@@ -37,7 +37,7 @@ public class Manufacturer {
 
     @Override
     public String toString() {
-        return "id: " + getid() + "\nName: " + getName();
+        return "id: " + getId() + "\nName: " + getName();
     }
 
 }

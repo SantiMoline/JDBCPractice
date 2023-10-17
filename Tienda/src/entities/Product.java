@@ -11,16 +11,16 @@ public class Product {
     }
 
     public Product(String name, double price, int manufacturerId) {
-        this.name = name;
-        this.price = price;
-        this.manufacturerId = manufacturerId;
+        setName(name);
+        setPrice(price);
+        setManufacturerId(manufacturerId);
     }
 
     public Product(int id, String name, double price, int manufacturerId) {
-        this.id = id;
-        this.name = name;
-        this.price = price;
-        this.manufacturerId = manufacturerId;
+        setId(id);
+        setName(name);
+        setPrice(price);
+        setManufacturerId(manufacturerId);
     }
 
     public int getId() {
@@ -28,6 +28,8 @@ public class Product {
     }
 
     public void setId(int id) {
+        if (id < 0)
+            throw new IllegalArgumentException("Id cannot be less than zero.");
         this.id = id;
     }
 
@@ -36,6 +38,8 @@ public class Product {
     }
 
     public void setName(String name) {
+        if (name == null || name.isBlank())
+            throw new IllegalArgumentException("Name cannot be null or blank.");
         this.name = name;
     }
 
@@ -44,6 +48,8 @@ public class Product {
     }
 
     public void setPrice(double price) {
+        if (price <= 0) 
+            throw new IllegalArgumentException("Price cannot be less than zero.");
         this.price = price;
     }
 
@@ -52,6 +58,8 @@ public class Product {
     }
 
     public void setManufacturerId(int manufacturerId) {
+        if (manufacturerId < 0) 
+            throw new IllegalArgumentException("Invalid Manufacturer ID. ManufacturerId cannot be less than zero.");
         this.manufacturerId = manufacturerId;
     }
 
@@ -59,9 +67,9 @@ public class Product {
     public String toString() {
         return 
             "\nid: " + getId() + 
-            "\nName: " + getName() + 
-            "\nPrice: " + getPrice() + 
-            "\nManufacturerid: " + getManufacturerId();
+            "\tName: " + getName() + 
+            "\tPrice: " + getPrice() + 
+            "\tManufacturerid: " + getManufacturerId();
     }
 
 }

@@ -8,15 +8,11 @@ import entities.Product;
 public final class ProductDAO extends DAO {
     
     public void saveProduct(Product prod) throws SQLException {
-        try {
-            if (prod == null) {
-                throw new IllegalArgumentException("Product cannot be null.");
-            }
-            String query = "INSERT INTO producto(nombre, precio, codigo_fabricante) " + "VALUES( '" + prod.getName() + "', " + prod.getPrice() + ", " + prod.getManufacturerId() + ");";  
-            insertUpdateDelete(query);
-        } catch (SQLException e) {
-            throw e;
+        if (prod == null) {
+            throw new IllegalArgumentException("Product cannot be null.");
         }
+        String query = "INSERT INTO producto(nombre, precio, codigo_fabricante) " + "VALUES('" + prod.getName() + "', " + prod.getPrice() + ", " + prod.getManufacturerId() + ");";  
+        insertUpdateDelete(query);
     }
 
     public void updateProduct(Product prod) throws SQLException {
